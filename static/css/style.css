@@ -1,0 +1,174 @@
+/* 十一学校品牌色 */
+:root {
+    --bnds-red: #C41A1A;      /* 国旗红 */
+    --bnds-yellow: #F5A623;   /* 秋实黄 */
+    --bnds-green: #4CAF50;    /* 春华绿 */
+    --bnds-blue: #1A73E8;     /* 太空蓝 */
+    --bnds-bg: #f8f9fa;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bnds-bg);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 800px;
+    height: 90vh;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 20px;
+}
+
+.chat-header {
+    background: linear-gradient(135deg, var(--bnds-red), var(--bnds-blue));
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.chat-header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.chat-header .subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-left: auto;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #fafafa;
+}
+
+.message {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    animation: fadeIn 0.3s ease;
+}
+
+.message.user {
+    flex-direction: row-reverse;
+}
+
+.message .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.message.bot .avatar {
+    background: var(--bnds-blue);
+    color: white;
+}
+
+.message.user .avatar {
+    background: var(--bnds-yellow);
+    color: #333;
+}
+
+.message .bubble {
+    max-width: 70%;
+    padding: 12px 18px;
+    border-radius: 18px;
+    line-height: 1.6;
+    word-wrap: break-word;
+}
+
+.message.bot .bubble {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-bottom-left-radius: 4px;
+}
+
+.message.user .bubble {
+    background: var(--bnds-blue);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-input-area {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 12px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 12px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.chat-input-area input:focus {
+    border-color: var(--bnds-blue);
+}
+
+.chat-input-area button {
+    padding: 12px 28px;
+    background: var(--bnds-red);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.chat-input-area button:hover {
+    background: #a01515;
+    transform: scale(1.02);
+}
+
+.chat-input-area button:active {
+    transform: scale(0.95);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.typing-indicator {
+    display: none;
+    padding: 12px 18px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    max-width: 70%;
+}
+
+.typing-indicator.active {
+    display: block;
+}

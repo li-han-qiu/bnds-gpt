@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNDS GPT · 十一学校AI助手</title>
+    <!-- 引入刚创建的CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- 头部：带学校特色 -->
+        <div class="chat-header">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="校徽" style="height: 40px;">
+            <h1>🏫 BNDS GPT</h1>
+            <span class="subtitle">北京市十一学校 · AI RD Agent</span>
+        </div>
+
+        <!-- 消息展示区域 -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="avatar">🤖</div>
+                <div class="bubble">你好！我是BNDS GPT，有什么关于十一学校的问题可以问我 😊</div>
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span>AI正在思考...</span>
+            </div>
+        </div>
+
+        <!-- 输入区域 -->
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="输入你的问题..." autofocus>
+            <button id="sendBtn">发送</button>
+        </div>
+    </div>
+
+    <!-- 引入JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

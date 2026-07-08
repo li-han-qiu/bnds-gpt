@@ -1,0 +1,26 @@
+# Python虚拟环境
+venv/
+env/
+
+# 向量数据库（chromadb 存储）
+chroma_db/
+*.sqlite3
+
+# 备份文件和临时文件
+*.pyc
+*.pyo
+*.save
+*.swp
+.DS_Store
+__pycache__/
+*.log
+
+# 环境变量文件（千万不要提交）
+.env
+.venv
+
+# Vercel 本地部署文件
+.vercel
+
+# 配置文件（如果包含敏感信息）
+config.py
