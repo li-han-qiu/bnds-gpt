@@ -41,7 +41,7 @@ zhipu_ef = ZhipuAIEmbeddingFunction(
     model_name="embedding-2"
 )
 
-chroma_client = chromadb.PersistentClient(path="./chroma_db")
+chroma_client = chromadb.PersistentClient(path="/app/chroma_db")
 collection = chroma_client.get_or_create_collection(
     name="bnds_knowledge",
     embedding_function=zhipu_ef

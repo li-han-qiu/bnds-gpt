@@ -2,7 +2,8 @@ import sqlite3
 import uuid
 from datetime import datetime
 
-DB_PATH = "bnds_gpt.db"  # 数据库文件会保存在项目根目录
+import os
+DB_PATH = os.path.join("/app/data", "bnds_gpt.db")
 
 def get_db():
     """获取数据库连接"""
@@ -12,6 +13,8 @@ def get_db():
 
 def init_db():
     """初始化数据库：创建两张表"""
+    import os
+    os.makedirs("/app/data", exist_ok=True)
     conn = get_db()
     cursor = conn.cursor()
 
