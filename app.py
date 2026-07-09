@@ -3,10 +3,14 @@ from zhipuai import ZhipuAI
 import os
 import chromadb
 from chromadb.api.types import Documents, Embeddings, EmbeddingFunction
-import requests  # 新增，用于调用智谱嵌入API
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+import requests
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+import database  # 导入数据库模块
 
 app = Flask(__name__)
+
+# 在应用启动时初始化数据库
+database.init_db()
 
 # --- 自定义智谱嵌入函数 (替代旧版内置函数) ---
 class ZhipuAIEmbeddingFunction(EmbeddingFunction):
@@ -100,10 +104,17 @@ def home():
 
 @app.route('/ask', methods=['POST'])
 def ask():
+    data = request.json
     user_input = request.json.get('message', '')
+    conv_id = data.get('conversation_id')  # 前端需要传这个参数
+
     if not user_input:
         return jsonify({'reply': '请说点什么吧'})
 
+    # 保存用户消息到数据库
+    if conv_id:
+        database.add_message(conv_id, 'user', user_input)
+    
     try:
         # 检索最相关的文档块
         results = collection.query(
@@ -132,11 +143,49 @@ def ask():
             ],
         )
         reply = response.choices[0].message.content
+
+        # 保存 AI 回复到数据库
+        if conv_id:
+            database.add_message(conv_id, 'assistant', reply)
+
         return jsonify({'reply': reply})
 
     except Exception as e:
         print(f"❌ Error: {e}")
         return jsonify({'reply': f'处理请求时出错: {str(e)}'})
+
+@app.route('/api/conversations', methods=['GET'])
+def get_conversations():
+    """获取所有对话列表"""
+    convs = database.get_all_conversations()
+    return jsonify(convs)
+
+@app.route('/api/conversations', methods=['POST'])
+def create_conversation():
+    """创建新对话"""
+    conv_id = database.create_conversation()
+    return jsonify({"id": conv_id})
+
+@app.route('/api/conversations/<conv_id>/messages', methods=['GET'])
+def get_conversation_messages(conv_id):
+    """获取某个对话的消息历史"""
+    messages = database.get_messages(conv_id)
+    return jsonify(messages)
+
+@app.route('/api/conversations/<conv_id>/messages', methods=['POST'])
+def add_conversation_message(conv_id):
+    """向对话中添加消息（由前端在发送消息时调用）"""
+    data = request.json
+    role = data.get('role', 'user')
+    content = data.get('content', '')
+    database.add_message(conv_id, role, content)
+    return jsonify({"status": "ok"})
+
+@app.route('/api/conversations/<conv_id>', methods=['DELETE'])
+def delete_conversation(conv_id):
+    """删除对话"""
+    database.delete_conversation(conv_id)
+    return jsonify({"status": "ok"})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

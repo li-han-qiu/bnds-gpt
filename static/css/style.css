@@ -172,3 +172,172 @@ body {
 .typing-indicator.active {
     display: block;
 }
+
+/* ===== 侧边栏样式 ===== */
+.app-container {
+    display: flex;
+    height: 100vh;
+    background: #f0f2f5;
+}
+
+.sidebar {
+    width: 280px;               /* 展开时的宽度 */
+    transition: width 0.3s ease; /* 平滑动画 */
+    overflow: hidden;           /* 折叠时内容不溢出 */
+    flex-shrink: 0;
+    background: #ffffff;
+    border-right: 1px solid #e8e8e8;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.sidebar-collapsed {
+    width: 60px;
+}
+.sidebar-collapsed .sidebar-header {
+    flex-direction: column;     /* 让按钮竖排 */
+    padding: 10px 4px;
+}
+.sidebar-collapsed .new-chat-btn {
+    font-size: 0;              /* 隐藏文字 */
+    padding: 8px;
+    background: var(--bnds-red);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.sidebar-collapsed .new-chat-btn::before {
+    content: "+";              /* 用加号代替文字 */
+    font-size: 24px;
+    color: white;
+}
+.sidebar-collapsed .conversation-list {
+    padding: 4px;
+}
+.sidebar-collapsed .conversation-item .title {
+    display: none;             /* 隐藏对话标题文字 */
+}
+.sidebar-collapsed .conversation-item .delete-btn {
+    display: none;             /* 隐藏删除按钮（可保留图标） */
+}
+.sidebar-collapsed .conversation-item {
+    justify-content: center;
+    padding: 8px;
+}
+.sidebar-collapsed .conversation-item::before {
+    content: "💬";             /* 用图标代表每条对话 */
+    font-size: 20px;
+}
+
+.new-chat-btn {
+    width: 100%;
+    padding: 10px;
+    background: var(--bnds-red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.new-chat-btn:hover {
+    background: #a01515;
+}
+
+.conversation-list {
+    list-style: none;
+    padding: 8px;
+    margin: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.conversation-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    margin-bottom: 4px;
+}
+
+.conversation-item:hover {
+    background: #f0f2f5;
+}
+
+.conversation-item.active {
+    background: #e6f0ff;
+    border-left: 3px solid var(--bnds-blue);
+}
+
+.conversation-item .title {
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.conversation-item .delete-btn {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 4px;
+}
+
+.conversation-item .delete-btn:hover {
+    color: #ff4d4f;
+}
+
+/* ===== 主聊天区域 ===== */
+.chat-area {
+    flex: 1;
+    transition: margin-left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+}
+
+.chat-area .chat-header {
+    background: white;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chat-area .chat-header h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.chat-area .chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.chat-area .chat-input-area {
+    background: white;
+    padding: 16px 24px;
+    border-top: 1px solid #e8e8e8;
+    display: flex;
+    gap: 12px;
+}
